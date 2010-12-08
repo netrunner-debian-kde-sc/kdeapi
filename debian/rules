@@ -1,0 +1,79 @@
+#!/usr/bin/make -f
+
+# configuration
+MODULES := kdelibs kdepimlibs
+VERSION := $(shell dpkg-parsechangelog | sed -n 's/^Version: //p' | cut -f2 -d ':' | cut -f1 -d '-')
+
+# variables for HTML generation
+HTMLDOXY := $(CURDIR)/kdelibs/doc/api/doxygen.sh
+HTMLDOXY_ARGS := --doxdatadir=$(CURDIR)/kdelibs/doc/common
+HTMLDESTPATH := usr/share/doc/kde/HTML/en
+
+# variables for QCH generation
+QCHDOXY := $(CURDIR)/debian/kdedoxyqt.sh
+QCHDOXY_ARGS := -x "$(VERSION)"
+QCHDESTPATH := usr/share/doc/kde/qch
+
+# environment for the scripts
+export QTDOCDIR=/usr/share/qt4/doc/html
+export QTDOCTAG=${QTDOCDIR}/qt.tags
+
+# "functions"
+stampfile = $(patsubst %,build-%-stamp,$(1))
+apidocsdir_html = $(patsubst %,%-apidocs,$(1))
+pkg_module_html = $(patsubst %,%5-doc-html,$(1))
+apidocsdir_qch = $(patsubst %,%/apidocs,$(1))
+pkg_module_qch = $(patsubst %,%5-doc,$(1))
+
+
+define do-module
+
+$(stampfile):
+	# build the HTML documentation
+	$(HTMLDOXY) $(HTMLDOXY_ARGS) $(CURDIR)/$(1)
+	# build the QCH documentation
+	cd $(1) && $(QCHDOXY) $(QCHDOXY_ARGS) -n $(1)
+	touch $(stampfile)
+
+build-$(1): $(stampfile)
+	@echo $$@
+
+install-$(1): build-$(1)
+	# install the HTML documentation
+	install -d debian/$(pkg_module_html)/$(HTMLDESTPATH)
+	cp -a $(apidocsdir_html) debian/$(pkg_module_html)/$(HTMLDESTPATH)
+	# remove extra files left by doygen
+	find debian/$(pkg_module_html)/$(HTMLDESTPATH)/$(apidocsdir_html) \( -false \
+	  -o -name \*.md5 \
+	  -o -name \*.map \
+	\) -delete
+	# install the QCH documentation
+	install -D -m0644 $(1)/apidocs/qch/$(1)-$(VERSION).qch \
+	  debian/$(pkg_module_qch)/$(QCHDESTPATH)/$(1)-$(VERSION).qch
+
+endef
+
+$(foreach m,$(MODULES),$(eval $(call do-module,$(m))))
+
+override_dh_auto_build: $(foreach m,$(MODULES),build-$(m))
+	@echo $@
+
+override_dh_auto_install: $(foreach m,$(MODULES),install-$(m))
+	@echo $@
+
+override_dh_auto_clean:
+	# remove the generated HTML documentations
+	rm -rf $(foreach m,$(MODULES),$(call apidocsdir_html,$(m)))
+	# remove the generated QCH documentations
+	rm -rf $(foreach m,$(MODULES),$(call apidocsdir_qch,$(m)))
+	# remove the stamp files
+	rm -rf $(foreach m,$(MODULES),$(call stampfile,$(m)))
+	dh_auto_clean
+
+override_dh_compress:
+	dh_compress -X.qch -X.tag
+
+%:
+	dh $@ --parallel
+
+.PHONY: override_dh_auto_configure override_dh_auto_test
