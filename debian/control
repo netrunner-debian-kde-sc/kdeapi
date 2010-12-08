@@ -1,0 +1,64 @@
+Source: kdeapi
+Section: doc
+Priority: optional
+Maintainer: Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>
+Uploaders: Pino Toscano <pino@kde.org>
+Build-Depends: debhelper (>= 7.4.10), doxygen (>= 1.5.7), graphviz,
+ qt4-dev-tools, qt4-doc, qt4-doc-html
+Standards-Version: 3.9.1
+Homepage: http://www.kde.org/
+Vcs-Browser: http://git.debian.org/?p=pkg-kde/kde-sc/kdeapi.git
+Vcs-Git: git://git.debian.org/pkg-kde/kde-sc/kdeapi.git
+DM-Upload-Allowed: yes
+
+Package: kdelibs5-doc-html
+Architecture: all
+Depends: ${misc:Depends}
+Suggests: www-browser | konqueror, qt4-dev-tools, qt4-doc-html
+Conflicts: kdelibs4-doc
+Replaces: kdelibs4-doc
+Provides: kdelibs-doc
+Description: API documentation (HTML) for the KDE Platform Core libraries
+ This package contains API documentation for the KDE Platform Core libraries,
+ of use more for developers creating applications which use the core
+ KDE libraries, than regular users.
+ .
+ The documentation contained is in HTML format, and can be viewed with any
+ HTML browser.
+
+Package: kdelibs5-doc
+Architecture: all
+Depends: ${misc:Depends}
+Suggests: qt4-dev-tools, qt4-doc
+Description: API documentation (QCH) for the KDE Platform Core libraries
+ This package contains API documentation for the KDE Platform Core libraries,
+ of use more for developers creating applications which use the core
+ KDE libraries, than regular users.
+ .
+ The documentation contained is in QCH format, the new help format of Qt,
+ and can be viewed using the Qt Assistant provided in the qt4-dev-tools package.
+
+Package: kdepimlibs5-doc-html
+Architecture: all
+Depends: ${misc:Depends}
+Suggests: www-browser | konqueror, qt4-dev-tools, kdelibs5-doc-html, qt4-doc-html
+Description: API documentation (HTML) for the KDE PIM libraries
+ This package contains API documentation for the KDE PIM libraries,
+ of use more for developers creating applications which use the core
+ KDE libraries, than regular users.
+ .
+ The documentation contained is in HTML format, and can be viewed with any
+ HTML browser.
+
+Package: kdepimlibs5-doc
+Architecture: all
+Depends: ${misc:Depends}
+Suggests: qt4-dev-tools, kdelibs5-doc, qt4-doc
+Description: API documentation (QCH) for the KDE PIM libraries
+ This package contains API documentation for the KDE PIM libraries,
+ of use more for developers creating applications which use the core
+ KDE libraries, than regular users.
+ .
+ The documentation contained is in QCH format, the new help format of Qt,
+ and can be viewed using the Qt Assistant provided in the qt4-dev-tools package.
+

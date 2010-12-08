@@ -1,0 +1,7 @@
+kdeapi (4:4.5.4-0r1) UNRELEASED; urgency=low
+
+  [ Pino Toscano ]
+  * Initial release.
+
+ -- Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>  Wed, 08 Dec 2010 23:02:19 +0100
+
