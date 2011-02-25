@@ -1,0 +1,6 @@
+The Debian packaging for the `kdeapi' source is
+  Copyright 2010-2011, Pino Toscano <pino@kde.org>
+licensed under the GPL v2+, see
+- /usr/share/common-licenses/GPL-2
+- /usr/share/common-licenses/GPL-3
+

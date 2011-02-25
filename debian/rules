@@ -73,7 +73,19 @@ override_dh_auto_clean:
 override_dh_compress:
 	dh_compress -X.qch -X.tag
 
+update_copyrights:
+	for cf in `ls debian/copyright.d/* | grep -v template | xargs -n1 basename`; do \
+	  fixedcf=`echo $${cf} | sed -e 's,kde4libs,kdelibs,'` ; \
+	  for m in `dh_listpackages | grep $${fixedcf}`; do \
+	    cat debian/copyright > debian/$${m}.copyright ; \
+	    cat debian/copyright.d/template.header \
+	      | sed -e "s,\$${SOURCE},$${cf},g" \
+	      >> debian/$${m}.copyright ; \
+	    cat debian/copyright.d/$${cf} >> debian/$${m}.copyright ; \
+	  done \
+	done
+
 %:
 	dh $@ --parallel
 
-.PHONY: override_dh_auto_configure override_dh_auto_test
+.PHONY: override_dh_auto_configure override_dh_auto_test update_copyrights

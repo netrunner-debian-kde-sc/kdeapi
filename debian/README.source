@@ -1,0 +1,20 @@
+Updating the copyrights
+=======================
+
+The `copyright' file of each resulting binary deb contains the copyright of the
+source from which its documentation is generated.
+
+To automatize a bit this procedure, it is needed to just put the unchanged
+`copyright' file of the source (eg kde4libs, kdepimlibs, ...) in the
+`debian/copyright.d' directory, named after the source it was copied from.
+After that, calling
+  $ debian/rules update_copyrights
+will update the *.copyright files properly. Each of the resulting
+<package>.copyright files will contain, in order:
+- the `copyright' of this packaging (kdeapi)
+- a small header (`debian/copyright.d/template.header')
+- the actual copyrigt of the source
+
+Make sure to do the `update_copyrights' call after each update of the files in
+`debian/copyright.d'!
+
