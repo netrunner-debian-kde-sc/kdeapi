@@ -47,6 +47,10 @@ install-$(1): build-$(1)
 	  -o -name \*.md5 \
 	  -o -name \*.map \
 	\) -delete
+	# replace qt.tag files with symlinks to the original qt.tags file
+	find debian/$(pkg_module_html)/$(HTMLDESTPATH)/$(apidocsdir_html) \
+	  -name qt.tag \
+	  -exec ln -s -f $(QTDOCTAG) {} \;
 	# install the QCH documentation
 	install -D -m0644 $(1)/apidocs/qch/$(1)-$(VERSION).qch \
 	  debian/$(pkg_module_qch)/$(QCHDESTPATH)/$(1)-$(VERSION).qch
