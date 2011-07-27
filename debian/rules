@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
 # configuration
-MODULES := $(shell dh_listpackages | sed -r -e 's,-doc(-html)?$$,,' | sort -u)
+MODULES := $(shell dh_listpackages | sed -r -e 's,-doc(-html)?$$,,;s,[0-9],,' | sort -u)
 VERSION := $(shell dpkg-parsechangelog | sed -n 's/^Version: //p' | cut -f2 -d ':' | cut -f1 -d '-')
 
 # variables for HTML generation
