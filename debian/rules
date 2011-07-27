@@ -75,6 +75,9 @@ override_dh_auto_clean:
 override_dh_compress:
 	dh_compress -X.qch -X.tag
 
+override_dh_builddeb:
+	dh_builddeb -- -Zbzip2
+
 update_copyrights:
 	for cf in `ls debian/copyright.d/* | grep -v template | xargs -n1 basename`; do \
 	  fixedcf=`echo $${cf} | sed -e 's,kde4libs,kdelibs,'` ; \
