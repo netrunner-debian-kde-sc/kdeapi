@@ -73,7 +73,7 @@ override_dh_auto_clean:
 	dh_auto_clean
 
 override_dh_compress:
-	dh_compress -X.qch -X.tag
+	dh_compress -X.qch -X.tag -X.inc
 
 override_dh_builddeb:
 	dh_builddeb $(addprefix -p,$(filter %-doc-html,$(shell dh_listpackages))) -- -Zxz
