@@ -1,4 +1,4 @@
-kdeapi (4:4.7.2-0r1) UNRELEASED; urgency=low
+kdeapi (4:4.7.4-0r1) UNRELEASED; urgency=low
 
   [ Pino Toscano ]
   * Initial release. (Closes: #529572)
