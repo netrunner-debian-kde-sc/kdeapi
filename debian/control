@@ -10,7 +10,6 @@ Standards-Version: 3.9.2
 Homepage: http://www.kde.org/
 Vcs-Browser: http://git.debian.org/?p=pkg-kde/kde-sc/kdeapi.git
 Vcs-Git: git://git.debian.org/pkg-kde/kde-sc/kdeapi.git
-DM-Upload-Allowed: yes
 
 Package: kdelibs5-doc-html
 Architecture: all
